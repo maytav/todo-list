@@ -1,0 +1,21 @@
+###
+GET localhost:3000/api/users
+
+###
+POST localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "username": "mbm",
+  "email": "mbm@mbm.com",
+  "password": "1234"
+}
+
+###
+POST localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+  "email": "mbm@mbm.com",
+  "password": "1234"
+}

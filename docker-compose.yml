@@ -1,0 +1,42 @@
+version: "3"
+services:
+  angular:
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+      target: development
+    command: npm run start
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "4200:4200"
+    depends_on:
+      - api
+  api:
+    container_name: backend
+    restart: always
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: npm run start:dev
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/nest
+      - JWT_SECRET=sdsadsadsada2333
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:latest
+    container_name: db_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+volumes:
+  mongodata:
